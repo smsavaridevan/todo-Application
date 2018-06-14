@@ -1,0 +1,226 @@
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h4 class="panel-title"> To Do
+          <div class="pull-right"> <!-- <a href="#" data-perform="panel-dismiss" class="btn btn-primary btn-xs pull-right"><i class="fa fa-times"></i></a> --> <a href="#"  class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal" ><i class="fa fa-plus"></i></a> </div>
+        </h4>
+      </div>
+    
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">To Do Task</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <label for="date">Enter Date:</label>
+                 
+                    <input type="date" class="form-control" [(ngModel)]="taskdata.date" /> 
+              </div>
+                   
+              <div class="form-group">
+                  <label for="task">Enter Your Task:</label>
+                  <textarea class="form-control" placeholder="Enter Task"  [(ngModel)]="taskdata.task"></textarea>
+              </div>
+             
+              <div class="form-group">
+                <label for="status">Select Status:</label>
+                <select class="form-control" [(ngModel)]="taskdata.status">
+                  <option>Select Tast Status</option>
+                  <option value="Yet to Start">Yet to Start</option>
+                  <option value="On Going">On Going</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="comments">Comments:</label>
+                <textarea class="form-control" placeholder="Enter Comments" [(ngModel)]="taskdata.comments" ></textarea>
+              </div>
+    
+              <button type="button" *ngIf="btn_status"    class="btn btn-info" (click)="tasksave()" data-dismiss="modal" >Save</button>
+
+              
+              <button type="button" *ngIf="!btn_status" class="btn btn-info" (click)="taskupdate()" data-dismiss="modal" >Update</button>
+             <br>
+             <br>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+   </div>
+
+  <div class="panel-wrapper collapse in">
+    <div class="panel-body">
+      {{poststatus}}
+      {{deletestatus}}
+
+      
+           <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Task Date</th>
+                  <th>Task</th>
+                  <th>Status</th>
+                  
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="taskdatadetails?.length;else no_data_templ">
+                      <tr *ngFor="let tk of taskdatadetails; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{tk.record.date}}</td>
+                        <td>{{tk.record.task}}</td>
+                        <td>{{tk.record.status}}</td>
+                       
+                        <td>
+                          <button class="btn btn-sm btn-danger" (click)="deletetask(tk.id)">Delete</button>
+                          <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal"  (click)="update(tk)">Update</button>
+                        </td>
+                    </tr>
+              </tbody>
+              <ng-template #no_data_templ>
+               <caption align="bottom"  style="border:1px solid #e3e3e3;">No daata found...</caption> 
+             </ng-template>
+            </table>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-6">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h4 class="panel-title"> Do Today
+          <div class="pull-right"> <!-- <a href="#" data-perform="panel-dismiss" class="btn btn-success btn-xs pull-right"><i class="fa fa-times"></i></a> --> 
+            <a href="#"  class="btn btn-success btn-xs pull-right"  data-toggle="modal"><i class="fa fa-plus"></i></a> </div>
+        </h4>
+      </div>
+
+    <!-- form Starts -->
+     
+
+
+      <div class="panel-wrapper collapse in">
+        <div class="panel-body">
+          
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h4 class="panel-title"> In Progress
+          <div class="pull-right"> <!-- <a href="#" data-perform="panel-dismiss" class="btn btn-danger btn-xs pull-right"><i class="fa fa-times"></i></a> --> <a href="#"  class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#myModalphp"><i class="fa fa-plus"></i></a> </div>
+        </h4>
+      </div>
+
+
+      <div class="modal fade" id="myModalphp" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">PHP Add New</h4>
+              </div>
+
+              <div class="modal-body">
+                 
+              <div class="form-group">
+                <label for="Name">Enter Product Name:</label>
+                <input class="form-control" placeholder="Enter Name" [(ngModel)]="productphpdata.name"  />
+              </div>
+
+              <div class="form-group">
+                <label for="price">Enter Product price:</label>
+                <input class="form-control" placeholder="Enter price" [(ngModel)]="productphpdata.price"  />
+              </div>
+            
+              
+              <div class="form-group">
+                <label for="category_name">Enter Product Category name:</label>
+                <input class="form-control" placeholder="Enter category_name"   [(ngModel)]="productphpdata.category_name"  />
+              </div>
+
+
+              <div class="form-group">
+                <label for="description">description:</label>
+                <textarea class="form-control" placeholder="Enter description" [(ngModel)]="productphpdata.description"   ></textarea>
+              </div>
+
+                <button type="button" *ngIf="btn_status"    class="btn btn-info" (click)="savedatatophp()" data-dismiss="modal" >Save</button>
+
+
+                <button type="button" *ngIf="!btn_status" class="btn btn-info" (click)="taskupdate()" data-dismiss="modal" >Update</button>
+              <br>
+              <br>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="panel-wrapper collapse in">
+        <div class="panel-body"> 
+          
+
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Task Date</th>
+                <th>Task</th>
+                <th>Status</th>
+                
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let pr of phprecord; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{pr.id}}</td>
+                      <td>{{pr.name}}</td>
+                      <td>{{pr.description}}</td>
+                     
+                      <td>
+                        <button class="btn btn-sm btn-danger" (click)="deletetask(pr.id)">Delete</button>
+                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal"  (click)="update(pr)">Update</button>
+                      </td>
+                  </tr>
+            </tbody>
+            
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title"> Done
+          <div class="pull-right"> <!-- <a href="#" data-perform="panel-dismiss" class="btn btn-info btn-xs pull-right"><i class="fa fa-times"></i></a> --> <a href="#"  class="btn btn-info btn-xs pull-right"><i class="fa fa-plus"></i></a> </div>
+        </h4>
+      </div>
+      <div class="panel-wrapper collapse in">
+        <div class="panel-body"> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat perspiciatis unde omnis iste natus error. </div>
+      </div>
+    </div>
+  </div>
+</div> 
